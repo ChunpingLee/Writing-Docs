@@ -1,0 +1,68 @@
+# Django 博客开发学习笔记
+##代码类
+###1.url.py中的name用法
+#####(url.py中urlpatterns里面的name，可以在html页面中<href>标签中直接使用，代表url的别名)
+url.py:
+
+```
+urlpatterns = [
+    path('', views.blog_list, name='blog_list'),
+    path('<int:blog_id>', views.blog_detail, name='blog_detail'),
+    path('type/<int:category_id>', views.blog_with_type, name='blog_with_type'),
+]
+```
+html：
+
+```
+    <a href="{% url 'blog_detail' blog.id %}">
+        <h2>{{ blog.title }}</h2>
+    </a>
+```
+###2.如何在html页面上面引用静态资源文件
+####方法一：
+#####(在setting.py文件末尾增加一项配置：STATICFILES_DIRS)
+```
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.0/howto/static-files/
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+```
+html页面：
+
+```
+    <link rel="stylesheet" href="/static/base.css" />
+
+```
+####方法二：
+1.django自动为我们引用了一个库：'django.contrib.staticfiles'
+
+```
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'myblog',
+]
+```
+2.在需要加载css的html页面首行加载静态文件
+
+```
+{% load staticfiles %}
+```
+###3.bootstrap使用Gliphicons
+不要和其他组件混合使用
+图标类不能和其它组件直接联合使用。它们不能在同一个元素上与其他类共同存在。应该创建一个嵌套的 <span> 标签，并将图标类应用到这个 <span> 标签上。
+
+```
+<span class="glyphicon glyphicon-tag" aria-hidden="true">
+```
+
+
+
+

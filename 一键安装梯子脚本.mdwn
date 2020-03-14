@@ -1,0 +1,26 @@
+#一键安装梯子脚本
+    当申请试用Google Cloud Platform成功, 开启BBR加速后, 接下来就需要安装ShadowsocksR服务端了. 本文使用秋水逸冰的ShadowSocks一键安装脚本, 使用环境为Linode, CentOS7.
+    如果要用BBR加速, 最好先安装BBR, 顺序不一致可能出错.
+#操作步骤
+1. 连接VPS, 依次运行以下3条命令 (一行一个)
+
+```
+wget --no-check-certificate -O shadowsocks-all.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-all.sh
+chmod +x shadowsocks-all.sh
+./shadowsocks-all.sh 2>&1 | tee shadowsocks-all.log
+```
+    
+2. 出现提示信息, 选择要安装的版本. 推荐选ShadowsocksR, 输入2, 回车
+3. 设置密码
+4. 设置端口
+    可选范围1-65535, 建议4位以上, 同时避免设置为常用端口22, 80, 443等.
+5. 选择加密方式 建议选rc4-md5
+6. 选择协议, 建议选origin
+7. 选择混淆方式, 选plain
+8. 然后按任意键开始安装.
+9. 耐心等待一下, 安装所需时间根据网速, 机器配置等有所区别, 出现类似下图窗口表示安装完成.
+10. 图中显示的就是你的SSR的IP, 端口, 密码, 协议, 混淆, 加密方式等连接信息, 用小本本记下来.
+11. 接下来就是通过电脑连接测试了.
+
+
+

@@ -1,0 +1,74 @@
+# MAC下多python多开发环境并存操作指引
+## 1.首先使用pyenv versions查看可用的python 版本
+```
+lichunpingdeMBP:~ Abber_Lee$ pyenv versions
+  system
+  2.7.14
+* 3.6.5 (set by /Users/Abber_Lee/.python-version)
+```
+## 2.选择需要使用的python 版本(本文设置的是local环境)
+```
+lichunpingdeMBP:~ Abber_Lee$ pyenv local 3.6.5
+lichunpingdeMBP:~ Abber_Lee$ source .bash_profile
+```
+## 3.验证当前环境的python版本
+```
+lichunpingdeMBP:~ Abber_Lee$ python -V
+Python 3.6.5
+```
+## 4.创建基于当前python版本的独立开发环境
+```
+lichunpingdeMBP:~ Abber_Lee$ mkvirtualenv env_blogsite_365
+```
+## 5.选择需要切换到的开发环境
+```
+lichunpingdeMBP:~ Abber_Lee$ workon 
+env_blogsite_365  py2714dev         py365dev 
+lichunpingdeMBP:~ Abber_Lee$ workon env_blogsite_365
+(env_blogsite_365) lichunpingdeMBP:~ Abber_Lee$ 
+```
+## 6.查看当前环境切换是否成功，以及安装了哪些依赖包
+```
+(env_blogsite_365) lichunpingdeMBP:~ Abber_Lee$ pip list
+Package    Version
+---------- -------
+Django     2.0.5  
+pip        10.0.1 
+pytz       2018.4 
+setuptools 39.1.0 
+wheel      0.31.0 
+(env_blogsite_365) lichunpingdeMBP:~ Abber_Lee$ python -V
+Python 3.6.5
+(env_blogsite_365) lichunpingdeMBP:~ Abber_Lee$ 
+```
+## 7.在该开发环境下安装项目相关的依赖包<br>
+ （_依赖包只会安装在此虚拟环境中，不影响外部_）<br>
+ ```
+(env_blogsite_365) lichunpingdeMBP:~ Abber_Lee$ pip install Django
+```
+## 8.退出当前开发环境
+```
+(env_blogsite_365) lichunpingdeMBP:~ Abber_Lee$ deactivate
+lichunpingdeMBP:~ Abber_Lee$ 
+```
+## 9.退出当前local设置的python版本
+```
+lichunpingdeMBP:~ Abber_Lee$ pyenv local --unset
+```
+## 10.如何更新虚拟环境中的pip依赖包
+
+```
+workon virtualenv环境中：
+pip list --outdated | grep '^[a-z]* (' | cut -d " " -f 1 | xargs pip install -U
+```
+## 11.解决pip._vendor.urllib3.exceptions.ReadTimeoutError: 
+
+```
+HTTPSConnectionPool(host='files.pythonhosted.org', port=443): Read timed out.
+```
+```
+在下载python库的时候，由于国内网络原因，python包的下载速度非常慢，查看pip 文档.
+只要在 pip的时候控制超时即可, 具体参数为 --default-timeout=100， 后面的时间可以自己指定。
+```
+
+
